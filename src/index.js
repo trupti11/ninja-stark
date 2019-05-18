@@ -24,7 +24,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <div className="App">
         <header className="Ninja-header">
-            <h1 className="ninja">ToDo Redux app</h1>
+            <h1 className="ninja">Ninja Stark</h1>
           </header>
           <App />
         </div>
