@@ -216,27 +216,6 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: [] });
   };
 
-  handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    this.setState({ selected: newSelected });
-  };
-
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -244,8 +223,6 @@ class EnhancedTable extends React.Component {
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value });
   };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
     const { classes } = this.props;
@@ -269,18 +246,14 @@ class EnhancedTable extends React.Component {
               {stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
-                  const isSelected = this.isSelected(n.weekEnding);
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.weekEnding)}
-                      aria-checked={isSelected}
                       tabIndex={-1}
                       key={n.weekEnding}
-                      selected={isSelected}
                     >
                       <TableCell component="th" scope="row" style={style.tablePadding}>
-                        {`id_${n.weekEnding}`}
+                        {`${n.weekEnding}`}
                       </TableCell>
                       <TableCell align="right">{n.retailSales}</TableCell>
                       <TableCell align="right">{n.wholesaleSales}</TableCell>
